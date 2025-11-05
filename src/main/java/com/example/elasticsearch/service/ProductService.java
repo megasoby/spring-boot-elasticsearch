@@ -5,6 +5,7 @@ import com.example.elasticsearch.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,7 +32,9 @@ public class ProductService {
     }
 
     public List<Product> getAllProducts() {
-        return (List<Product>) productRepository.findAll();
+        List<Product> products = new ArrayList<>();
+        productRepository.findAll().forEach(products::add);
+        return products;
     }
 
     public void deleteProduct(String id) {
