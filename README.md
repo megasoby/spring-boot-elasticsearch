@@ -74,8 +74,8 @@ curl "http://localhost:8080/api/products/search/price?minPrice=1000000&maxPrice=
 ## 🛠️ 기술 스택
 
 - Spring Boot 3.2.0
-- Elasticsearch 8.5.0
-- Kibana 8.5.0
+- Elasticsearch 8.11.0
+- Kibana 8.11.0
 - Java 21
 - Gradle 8.5
 
