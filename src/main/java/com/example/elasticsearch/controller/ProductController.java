@@ -2,6 +2,7 @@ package com.example.elasticsearch.controller;
 
 import com.example.elasticsearch.entity.Product;
 import com.example.elasticsearch.service.ProductService;
+import com.example.elasticsearch.service.VectorSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,12 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
+    private final VectorSearchService vectorSearchService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, VectorSearchService vectorSearchService) {
         this.productService = productService;
+        this.vectorSearchService = vectorSearchService;
     }
 
     @PostMapping
@@ -75,6 +78,18 @@ public class ProductController {
             @RequestParam Double maxPrice) {
         List<Product> products = productService.searchByPrice(minPrice, maxPrice);
         return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/vector")
+    public ResponseEntity<List<Product>> vectorSearch(
+            @RequestParam String query,
+            @RequestParam(defaultValue = "5") int topK) {
+        try {
+            List<Product> products = vectorSearchService.vectorSearch(query, topK);
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
 

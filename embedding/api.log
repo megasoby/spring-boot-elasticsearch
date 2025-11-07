@@ -1,0 +1,44 @@
+/Users/megasoby/Work/WorkSpace/Cursor/spring-boot-elasticsearch/embedding/embedding_api.py:24: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [37200]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:5001 (Press CTRL+C to quit)
+============================================================
+🚀 Embedding API 서버 시작
+   포트: 5001
+   모델: jhgan/ko-sroberta-multitask
+============================================================
+🤖 모델 로드 중... (jhgan/ko-sroberta-multitask)
+✅ 모델 로드 완료!
+INFO:     127.0.0.1:60767 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60826 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61785 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61856 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61917 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62814 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62919 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62997 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63443 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64075 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64075 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64792 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64837 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64837 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65081 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65158 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65158 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65220 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65220 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49674 - "POST /embed HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37200]
+/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/resource_tracker.py:301: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-37200-k0ym8mqz'}
+  warnings.warn(

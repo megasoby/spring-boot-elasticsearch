@@ -2,8 +2,12 @@ package com.example.elasticsearch.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "products")
+import java.util.List;
+
+@Document(indexName = "products_korean")
 public class Product {
 
     @Id
@@ -13,6 +17,9 @@ public class Product {
     private Double price;
     private String category;
     private Integer stock;
+    
+    @Field(name = "name_vector", type = FieldType.Dense_Vector)
+    private List<Float> nameVector;
 
     public Product() {}
 
@@ -71,6 +78,14 @@ public class Product {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public List<Float> getNameVector() {
+        return nameVector;
+    }
+
+    public void setNameVector(List<Float> nameVector) {
+        this.nameVector = nameVector;
     }
 
     @Override
