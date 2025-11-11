@@ -20,6 +20,9 @@ public class Product {
     
     @Field(name = "name_vector", type = FieldType.Dense_Vector)
     private List<Float> nameVector;
+    
+    // 검색 결과 유사도 점수 (Elasticsearch에 저장되지 않음)
+    private transient Double score;
 
     public Product() {}
 
@@ -86,6 +89,14 @@ public class Product {
 
     public void setNameVector(List<Float> nameVector) {
         this.nameVector = nameVector;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     @Override

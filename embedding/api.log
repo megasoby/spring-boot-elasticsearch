@@ -5,7 +5,7 @@
         [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
         
   @app.on_event("startup")
-INFO:     Started server process [37200]
+INFO:     Started server process [8006]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:5001 (Press CTRL+C to quit)
@@ -16,29 +16,42 @@ INFO:     Uvicorn running on http://0.0.0.0:5001 (Press CTRL+C to quit)
 ============================================================
 🤖 모델 로드 중... (jhgan/ko-sroberta-multitask)
 ✅ 모델 로드 완료!
-INFO:     127.0.0.1:60767 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60826 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61785 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61856 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61917 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62814 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62919 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62997 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63443 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64075 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64075 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64792 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64837 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64837 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65081 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65158 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65158 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65220 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65220 - "POST /embed HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49674 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51563 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51632 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51674 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51720 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52141 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53028 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53028 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53358 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53420 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53504 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53857 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54424 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56190 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56505 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56549 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58956 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60579 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60609 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60765 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61265 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61338 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61364 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62357 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56791 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65165 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65206 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65257 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61981 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62622 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63073 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65319 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62989 - "POST /embed HTTP/1.1" 200 OK
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [37200]
-/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/resource_tracker.py:301: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-37200-k0ym8mqz'}
+INFO:     Finished server process [8006]
+/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/resource_tracker.py:301: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-8006-gwha_d8l'}
   warnings.warn(

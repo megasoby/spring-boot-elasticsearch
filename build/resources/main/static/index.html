@@ -33,7 +33,7 @@
 
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 350px 1fr;
             gap: 20px;
         }
 
@@ -148,15 +148,37 @@
         /* 상품 테이블 */
         .products-table {
             width: 100%;
+            min-width: 900px;
             border-collapse: collapse;
             margin-top: 20px;
+            table-layout: fixed;
+        }
+        
+        /* 테이블 컨테이너에 스크롤 추가 */
+        #productsContainer {
+            overflow-x: auto;
+            width: 100%;
         }
 
         .products-table th,
         .products-table td {
-            padding: 12px;
+            padding: 15px 12px;
             text-align: left;
             border-bottom: 1px solid #e0e0e0;
+            vertical-align: middle;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* 텍스트 줄바꿈 방지 */
+        .products-table td {
+            white-space: nowrap;
+        }
+        
+        /* 설명은 줄바꿈 허용 */
+        .products-table td:nth-child(2) {
+            white-space: normal;
+            word-break: break-word;
         }
 
         .products-table th {
@@ -164,6 +186,25 @@
             color: #667eea;
             font-weight: 600;
         }
+        
+        /* 컬럼 너비 조정 (고정 너비) */
+        .products-table th:nth-child(1),
+        .products-table td:nth-child(1) { width: 180px; min-width: 180px; } /* 상품명 */
+        
+        .products-table th:nth-child(2),
+        .products-table td:nth-child(2) { width: 250px; min-width: 250px; } /* 설명 */
+        
+        .products-table th:nth-child(3),
+        .products-table td:nth-child(3) { width: 130px; min-width: 130px; } /* 가격 */
+        
+        .products-table th:nth-child(4),
+        .products-table td:nth-child(4) { width: 110px; min-width: 110px; } /* 카테고리 */
+        
+        .products-table th:nth-child(5),
+        .products-table td:nth-child(5) { width: 80px; min-width: 80px; text-align: center; } /* 재고 */
+        
+        .products-table th:nth-child(6),
+        .products-table td:nth-child(6) { width: 110px; min-width: 110px; text-align: center; } /* 유사도 */
 
         .products-table tr:hover {
             background: #f8f9fa;
@@ -375,6 +416,7 @@
                     <div class="search-section">
                         <div class="search-tabs">
                             <div class="tab-button active" onclick="switchTab('all')">전체</div>
+                            <div class="tab-button" onclick="switchTab('rag')">🤖 RAG 검색</div>
                             <div class="tab-button" onclick="switchTab('vector')">벡터 검색</div>
                             <div class="tab-button" onclick="switchTab('text')">텍스트 검색</div>
                             <div class="tab-button" onclick="switchTab('price')">가격 검색</div>
@@ -382,6 +424,18 @@
                         
                         <div id="tab-all" class="search-content active">
                             <button onclick="loadAllProducts()">📋 전체 상품 보기</button>
+                        </div>
+                        
+                        <div id="tab-rag" class="search-content">
+                            <div class="form-group">
+                                <label>🤖 질문을 입력하세요 (RAG 검색)</label>
+                                <textarea id="ragQuery" placeholder="예: 스마트워치 추천해줘, 노트북은 어떤게 좋아?" style="min-height: 80px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>검색 결과 수</label>
+                                <input type="number" id="ragTopK" value="5" min="1" max="10">
+                            </div>
+                            <button onclick="ragSearch()">🚀 RAG 검색</button>
                         </div>
                         
                         <div id="tab-vector" class="search-content">
@@ -424,6 +478,13 @@
                         <div class="spinner"></div>
                         <p>로딩 중...</p>
                     </div>
+                    
+                    <!-- RAG 컨텍스트 표시 영역 -->
+                    <div id="ragContextContainer" style="display: none; margin-bottom: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h3 style="color: #667eea; margin-bottom: 10px;">🤖 AI 컨텍스트 (Claude가 받을 내용)</h3>
+                        <pre id="ragContext" style="white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 14px; color: #333; background: white; padding: 15px; border-radius: 8px; max-height: 400px; overflow-y: auto;"></pre>
+                    </div>
+                    
                     <div id="productsContainer"></div>
                 </div>
             </div>
@@ -518,6 +579,7 @@
             
             try {
                 showLoading(true);
+                hideRagContext(); // RAG 컨텍스트 숨기기
                 const response = await fetch(`${API_BASE}/search/vector?query=${encodeURIComponent(query)}&topK=10`);
                 const products = await response.json();
                 displayProducts(products);
@@ -527,6 +589,63 @@
             } finally {
                 showLoading(false);
             }
+        }
+
+        // RAG 검색
+        async function ragSearch() {
+            const query = document.getElementById('ragQuery').value;
+            const topK = document.getElementById('ragTopK').value;
+            
+            if (!query) {
+                showAlert('searchAlert', '⚠️ 질문을 입력하세요.', 'error');
+                return;
+            }
+            
+            try {
+                showLoading(true);
+                const response = await fetch('http://localhost:8081/api/rag/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        topK: parseInt(topK)
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('RAG 검색 실패');
+                }
+                
+                const ragResponse = await response.json();
+                
+                // 컨텍스트 표시
+                showRagContext(ragResponse.context);
+                
+                // 상품 목록 표시
+                displayProducts(ragResponse.products);
+                
+                showAlert('searchAlert', `🤖 RAG 검색 완료: ${ragResponse.count}개 결과`, 'success');
+            } catch (error) {
+                showAlert('searchAlert', '❌ RAG 검색 실패: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // RAG 컨텍스트 표시
+        function showRagContext(context) {
+            const container = document.getElementById('ragContextContainer');
+            const contextElement = document.getElementById('ragContext');
+            contextElement.textContent = context;
+            container.style.display = 'block';
+        }
+
+        // RAG 컨텍스트 숨기기
+        function hideRagContext() {
+            const container = document.getElementById('ragContextContainer');
+            container.style.display = 'none';
         }
 
         // 텍스트 검색
@@ -539,6 +658,7 @@
             
             try {
                 showLoading(true);
+                hideRagContext(); // RAG 컨텍스트 숨기기
                 const response = await fetch(`${API_BASE}/search/name?name=${encodeURIComponent(query)}`);
                 const products = await response.json();
                 displayProducts(products);
@@ -562,6 +682,7 @@
             
             try {
                 showLoading(true);
+                hideRagContext(); // RAG 컨텍스트 숨기기
                 const response = await fetch(`${API_BASE}/search/price?minPrice=${minPrice}&maxPrice=${maxPrice}`);
                 const products = await response.json();
                 displayProducts(products);
@@ -601,12 +722,17 @@
                             <th>가격</th>
                             <th>카테고리</th>
                             <th>재고</th>
+                            <th>유사도</th>
                         </tr>
                     </thead>
                     <tbody>
             `;
             
             products.forEach(product => {
+                const scoreHtml = product.score 
+                    ? `<td><span class="badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-weight: bold;">⭐ ${product.score.toFixed(4)}</span></td>`
+                    : '<td>-</td>';
+                
                 html += `
                     <tr>
                         <td><strong>${product.name}</strong></td>
@@ -614,6 +740,7 @@
                         <td class="price">₩${product.price.toLocaleString()}</td>
                         <td><span class="badge badge-primary">${product.category}</span></td>
                         <td class="stock">${product.stock}개</td>
+                        ${scoreHtml}
                     </tr>
                 `;
             });
@@ -627,6 +754,10 @@
             let html = '<div class="products-grid">';
             
             products.forEach(product => {
+                const scoreHtml = product.score 
+                    ? `<div style="margin-top: 10px;"><span class="badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-weight: bold; font-size: 13px;">⭐ 유사도: ${product.score.toFixed(4)}</span></div>`
+                    : '';
+                
                 html += `
                     <div class="product-card">
                         <div class="product-name">${product.name}</div>
@@ -638,6 +769,7 @@
                             </div>
                             <div class="stock">재고: ${product.stock}개</div>
                         </div>
+                        ${scoreHtml}
                     </div>
                 `;
             });

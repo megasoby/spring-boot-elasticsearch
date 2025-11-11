@@ -53,9 +53,15 @@ public class VectorSearchService {
             // 3. 검색 실행
             SearchResponse<Product> response = elasticsearchClient.search(searchRequest, Product.class);
 
-            // 4. 결과 반환
+            // 4. 결과 반환 (유사도 점수 포함)
             return response.hits().hits().stream()
-                    .map(Hit::source)
+                    .map(hit -> {
+                        Product product = hit.source();
+                        if (product != null && hit.score() != null) {
+                            product.setScore(hit.score());
+                        }
+                        return product;
+                    })
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
