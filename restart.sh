@@ -81,8 +81,8 @@ echo ""
 # 6. 서버 부팅 대기
 # ========================================
 echo "⏳ 서버 부팅 대기 중..."
-echo "  - Python 서버: 5초 대기"
-sleep 5
+echo "  - Python 서버: 10초 대기"
+sleep 10
 
 # Python 서버 상태 확인
 if curl -s http://localhost:5001/health > /dev/null 2>&1; then
