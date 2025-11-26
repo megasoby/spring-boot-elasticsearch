@@ -651,7 +651,7 @@
             let contextHtml = '';
             if (consultations && consultations.length > 0) {
                 const consultTags = consultations.map(c => 
-                    `<span class="context-product">${c.csasiName} (유사도: ${(c.score * 100).toFixed(1)}%)</span>`
+                    `<span class="context-product">${c.csasi_name || c.csasiName || '상담 가이드'} (유사도: ${(c.score * 100).toFixed(1)}%)</span>`
                 ).join('');
                 
                 contextHtml = `
