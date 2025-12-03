@@ -613,8 +613,9 @@
                 // 타이핑 인디케이터 숨기기
                 hideTypingIndicator();
 
-                // RAG 응답 추가 (context 텍스트를 AI 답변으로 사용)
-                addMessage('agent', data.context, data.consultations);
+                // AI 응답 추가 (aiAnswer가 있으면 사용, 없으면 context)
+                const answer = data.aiAnswer || data.context;
+                addMessage('agent', answer, data.consultations, null, data.responseTime);
 
                 // 히스토리 저장
                 messageHistory.push({
@@ -637,7 +638,7 @@
         }
 
         // 메시지 추가
-        function addMessage(type, text, consultations = null, error = null) {
+        function addMessage(type, text, consultations = null, error = null, responseTime = null) {
             const container = document.getElementById('chatContainer');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}`;
@@ -669,13 +670,15 @@
                 errorHtml = `<div class="error-message">⚠️ 오류: ${error}</div>`;
             }
 
+            const responseTimeHtml = responseTime ? ` (${(responseTime / 1000).toFixed(1)}초)` : '';
+            
             messageDiv.innerHTML = `
                 <div class="message-avatar">${type === 'user' ? '👤' : '🤖'}</div>
                 <div class="message-content">
                     <div class="message-text">${escapeHtml(text)}</div>
                     ${contextHtml}
                     ${errorHtml}
-                    <div class="message-time">${timeString}</div>
+                    <div class="message-time">${timeString}${responseTimeHtml}</div>
                 </div>
             `;
 

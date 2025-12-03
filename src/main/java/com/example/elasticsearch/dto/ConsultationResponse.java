@@ -18,12 +18,24 @@ public class ConsultationResponse {
     private String context;
     private List<Consultation> consultations;
     private Integer count;
+    private String aiAnswer;  // Claude AI 응답
+    private Long responseTime; // 응답 시간 (ms)
     
     public ConsultationResponse(String query, String context, List<Consultation> consultations) {
         this.query = query;
         this.context = context;
         this.consultations = consultations;
         this.count = consultations != null ? consultations.size() : 0;
+    }
+    
+    public ConsultationResponse(String query, String context, List<Consultation> consultations, 
+                                 String aiAnswer, Long responseTime) {
+        this.query = query;
+        this.context = context;
+        this.consultations = consultations;
+        this.count = consultations != null ? consultations.size() : 0;
+        this.aiAnswer = aiAnswer;
+        this.responseTime = responseTime;
     }
 }
 
