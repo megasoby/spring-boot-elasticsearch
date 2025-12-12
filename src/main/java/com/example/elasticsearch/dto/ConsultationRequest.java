@@ -13,5 +13,9 @@ import lombok.NoArgsConstructor;
 public class ConsultationRequest {
     private String query;
     private Integer topK = 5;
+    
+    // 주문 정보 (고도화 1차)
+    private String ordNo;           // 주문번호
+    private Integer ordItemSeq;     // 주문상품순번
 }
 

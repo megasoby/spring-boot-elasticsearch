@@ -32,6 +32,10 @@ dependencies {
     implementation platform('org.springframework.ai:spring-ai-bom:1.0.0-M4')
     implementation 'org.springframework.ai:spring-ai-bedrock-converse-spring-boot-starter'
     
+    // Oracle JDBC (주문 데이터 조회용)
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'com.oracle.database.jdbc:ojdbc11:23.3.0.23.09'
+    
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

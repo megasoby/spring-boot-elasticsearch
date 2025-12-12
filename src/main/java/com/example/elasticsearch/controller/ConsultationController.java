@@ -38,15 +38,20 @@ public class ConsultationController {
      * 상담 가이드 RAG 검색 (GET)
      * @param query 검색 질문
      * @param topK 검색 개수 (기본 5)
+     * @param ordNo 주문번호 (선택)
+     * @param ordItemSeq 상품순번 (선택)
      * @return 검색 결과 및 컨텍스트
      */
     @GetMapping("/search")
     public ResponseEntity<ConsultationResponse> searchGet(
             @RequestParam String query,
-            @RequestParam(defaultValue = "5") Integer topK) {
-        log.info("GET /api/consultation/search - query: {}, topK: {}", query, topK);
+            @RequestParam(defaultValue = "5") Integer topK,
+            @RequestParam(required = false) String ordNo,
+            @RequestParam(required = false) Integer ordItemSeq) {
+        log.info("GET /api/consultation/search - query: {}, topK: {}, ordNo: {}, ordItemSeq: {}", 
+                query, topK, ordNo, ordItemSeq);
         
-        ConsultationRequest request = new ConsultationRequest(query, topK);
+        ConsultationRequest request = new ConsultationRequest(query, topK, ordNo, ordItemSeq);
         ConsultationResponse response = consultationService.search(request);
         return ResponseEntity.ok(response);
     }
@@ -63,7 +68,7 @@ public class ConsultationController {
             @RequestParam(defaultValue = "5") Integer topK) {
         log.info("GET /api/consultation/search/text - query: {}, topK: {}", query, topK);
         
-        ConsultationRequest request = new ConsultationRequest(query, topK);
+        ConsultationRequest request = new ConsultationRequest(query, topK, null, null);
         ConsultationResponse response = consultationService.textSearch(request);
         return ResponseEntity.ok(response);
     }
